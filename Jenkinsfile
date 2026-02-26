@@ -45,4 +45,24 @@ pipeline {
       }
     }
   }
+  post {
+    success {
+        withCredentials([string(credentialsId: 'slack-webhook', variable: 'SLACK_URL')]) {
+            sh '''
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"✅ Build SUCCESS - TP4 Jenkins CI/CD"}' \
+            $SLACK_URL
+            '''
+        }
+    }
+    failure {
+        withCredentials([string(credentialsId: 'slack-webhook', variable: 'SLACK_URL')]) {
+            sh '''
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"❌ Build FAILED - TP4 Jenkins CI/CD"}' \
+            $SLACK_URL
+            '''
+        }
+    }
+}
 }
