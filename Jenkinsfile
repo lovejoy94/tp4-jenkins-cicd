@@ -45,6 +45,11 @@ pipeline {
       }
     }
   }
+  stage('Force Fail') {
+    steps {
+        sh 'exit 1'
+    }
+}
 post {
   success {
     withCredentials([string(credentialsId: 'SLACK_URL', variable: 'SLACK_URL')]) {
