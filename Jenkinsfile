@@ -44,12 +44,13 @@ pipeline {
         sh 'docker run -d --name tp4-staging -p 3001:3000 $IMAGE_NAME:latest'
       }
     }
-  }
-  stage('Force Fail') {
-    steps {
+    stage('Force Fail') {
+      steps {
         sh 'exit 1'
-    }
-}
+     }
+   }
+  }
+
 post {
   success {
     withCredentials([string(credentialsId: 'SLACK_URL', variable: 'SLACK_URL')]) {
